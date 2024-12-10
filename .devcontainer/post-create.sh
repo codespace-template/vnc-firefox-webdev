@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
-# pnpm i
-# pnpm dev
+sudo chmod +x start-firefox.sh
+sudo chmod +x stop-firefox.sh

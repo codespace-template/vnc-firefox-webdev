@@ -1,52 +1,38 @@
 {
-	"name": "Code - OSS",
-	"build": {
-		"dockerfile": "Dockerfile"
-	},
-	"features": {
-		"ghcr.io/devcontainers/features/desktop-lite:1.2.5": {},
-		"ghcr.io/devcontainers-contrib/features/apt-get-packages:1.0.6": {
-        	"packages": "firefox"
-      	}
-	},
-	"containerEnv": {
-		"DISPLAY": "" // Allow the Dev Containers extension to set DISPLAY, post-create.sh will add it back in ~/.bashrc and ~/.zshrc if not set.
-	},
-	"overrideCommand": false,
-	"privileged": true,
-	"mounts": [
-		{
-			"source": "vscode-dev",
-			"target": "/vscode-dev",
-			"type": "volume"
-		}
-	],
-	"postCreateCommand": "./.devcontainer/post-create.sh",
-	"customizations": {
-		"vscode": {
-			"settings": {
-				"resmon.show.battery": true,
-				"resmon.show.cpufreq": true
-			},
-			"extensions": []
-		}
-	},
-	"forwardPorts": [6080, 5901, 3000],
-	"portsAttributes": {
-		"6080": {
-			"label": "VNC web client (noVNC)",
-			"onAutoForward": "silent"
-		},
-		"5901": {
-			"label": "VNC TCP port",
-			"onAutoForward": "silent"
-		},
-		"3000": {
-			"label": "Application Port",
-			"onAutoForward": "openPreview"
-		}
-	},
-	"hostRequirements": {
-		"memory": "9gb"
-	}
+    "name": "Remote Web Development",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "features": {
+        "ghcr.io/devcontainers/features/desktop-lite:1": {
+            "version": "latest",
+            "noVncVersion": "1.2.0",
+            "password": "vscode",
+            "webPort": "6080",
+            "vncPort": "5901"
+        }
+    },
+    "postCreateCommand": "./.devcontainer/post-create.sh",
+    "forwardPorts": [
+        6080,
+        5901,
+        3000
+    ],
+    "portsAttributes": {
+        "6080": {
+            "label": "VNC web client (noVNC)",
+            "onAutoForward": "openPreview"
+        },
+        "5901": {
+            "label": "VNC TCP port",
+            "onAutoForward": "silent"
+        },
+        "3000": {
+            "label": "Application",
+            "onAutoForward": "notify"
+        }
+    },
+    "hostRequirements": {
+        "memory": "9gb"
+    }
 }

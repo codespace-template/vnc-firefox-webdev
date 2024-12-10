@@ -1,14 +1,12 @@
 FROM mcr.microsoft.com/devcontainers/typescript-node:20-bookworm
 
-# ADD install-vscode.sh /root/
-# RUN /root/install-vscode.sh
 
-RUN git config --system codespaces-theme.hide-status 1
+RUN export DEBIAN_FRONTEND=noninteractive
+RUN apt-get update -y && apt-get upgrade -y
 
-USER node
-# RUN npm install -g node-gyp
-RUN NPM_CACHE="$(npm config get cache)" && rm -rf "$NPM_CACHE" && ln -s /vscode-dev/npm-cache "$NPM_CACHE"
-RUN echo 'export DISPLAY="${DISPLAY:-:1}"' | tee -a ~/.bashrc >> ~/.zshrc
+COPY ./install-firefox.sh /tmp/
+RUN chmod +x /tmp/install-firefox.sh && /tmp/install-firefox.sh
+RUN rm -f /tmp/install-firefox.sh
+RUN apt-get update -y && apt-get upgrade -y
 
-USER root
-CMD chown node:node /vscode-dev && sudo -u node mkdir -p /vscode-dev/npm-cache && sleep inf
+
